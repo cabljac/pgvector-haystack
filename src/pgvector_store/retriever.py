@@ -5,7 +5,7 @@ from typing import Any, Dict, Optional
 
 from haystack.preview import component
 
-from example_store import ExampleDocumentStore
+from pgvector_store import ExampleDocumentStore
 
 
 @component

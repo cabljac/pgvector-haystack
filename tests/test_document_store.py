@@ -4,7 +4,7 @@
 import pytest
 from haystack.preview.testing.document_store import DocumentStoreBaseTests
 
-from example_store.document_store import ExampleDocumentStore
+from pgvector_store.document_store import ExampleDocumentStore
 
 
 @pytest.mark.skip("This is an example Document Store")
