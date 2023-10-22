@@ -4,7 +4,7 @@
 import pytest
 from haystack.preview.testing.document_store import DocumentStoreBaseTests
 
-from pgvector_store.document_store import ExampleDocumentStore
+from pgvector_store.document_store import PgVectorDocumentStore
 
 
 @pytest.mark.skip("This is an example Document Store")
@@ -15,9 +15,9 @@ class TestDocumentStore(DocumentStoreBaseTests):
     """
 
     @pytest.fixture
-    def docstore(self) -> ExampleDocumentStore:
+    def docstore(self) -> PgVectorDocumentStore:
         """
         This is the most basic requirement for the child class: provide
         an instance of this document store so the base class can use it.
         """
-        return ExampleDocumentStore()
+        return PgVectorDocumentStore()

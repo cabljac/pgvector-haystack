@@ -5,16 +5,16 @@ from typing import Any, Dict, Optional
 
 from haystack.preview import component
 
-from pgvector_store import ExampleDocumentStore
+from pgvector_store import PgVectorDocumentStore
 
 
 @component
 class ExampleRetriever:
     """
-    A component for retrieving documents from an ExampleDocumentStore.
+    A component for retrieving documents from an PgVectorDocumentStore.
     """
 
-    def __init__(self, document_store: ExampleDocumentStore, filters: Optional[Dict[str, Any]] = None, top_k: int = 10):
+    def __init__(self, document_store: PgVectorDocumentStore, filters: Optional[Dict[str, Any]] = None, top_k: int = 10):
         """
         Create an ExampleRetriever component. Usually you pass some basic configuration
         parameters to the constructor.

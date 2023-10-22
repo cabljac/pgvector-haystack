@@ -9,28 +9,36 @@ from haystack.preview.document_stores.decorator import document_store
 from haystack.preview.document_stores.errors import DuplicateDocumentError, MissingDocumentError
 from haystack.preview.document_stores.protocols import DuplicatePolicy
 
+import psycopg
+
+
 logger = logging.getLogger(__name__)
 
 
 @document_store
-class ExampleDocumentStore:  # FIXME
+class PgVectorDocumentStore:  # FIXME
     """
     Except for the __init__(), signatures of any other method in this class must not change.
     """
 
-    def __init__(self, example_param: int = 42):
+    def __init__(self, conn_info: str, table_name: str = "documents"):
+
         """
         Initializes the store. The __init__ constructor is not part of the Store Protocol
         and the signature can be customized to your needs. For example, parameters needed
         to set up a database client would be passed to this method.
         """
-        self.example_param = example_param  # FIXME
+        self.conn_info = conn_info
+        self.conn = psycopg.connect(conn_info)
+        self.cursor = self.conn.cursor()
+        self.table_name = table_name
 
     def count_documents(self) -> int:
         """
         Returns how many documents are present in the document store.
         """
-        return 0  # FIXME
+        self.cur.execute(f"SELECT COUNT (*) FROM {self.table_name};")
+        return self.cur.fetchone()[0]
 
     def filter_documents(self, _: Optional[Dict[str, Any]] = None) -> List[Document]:
         """
@@ -118,6 +126,17 @@ class ExampleDocumentStore:  # FIXME
         :raises DuplicateDocumentError: Exception trigger on duplicate document if `policy=DuplicatePolicy.FAIL`
         :return: None
         """
+
+        # Just noting this for reference temporarily:
+        # class Document:
+        #     content: Union[str, pd.DataFrame]
+        #     content_type: Literal["text", "table", "image"]
+        #     id: str
+        #     meta: Dict[str, Any]
+        #     score: Optional[float] = None
+        #     embedding: Optional[np.ndarray] = None
+        #     id_hash_keys: Optional[List[str]] = None
+
         for _ in documents:  # FIXME
             if policy == DuplicatePolicy.FAIL:
                 raise DuplicateDocumentError
